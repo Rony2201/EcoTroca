@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil"
 import Header from "./components/Header/Header";
+import About from "./pages/About";
 
 function AppRoutes() {
   return (
@@ -12,6 +13,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/perfil" element={<Perfil />}></Route>
+        <Route path="/sobre" element={<About />}></Route>
       </Routes>
     </BrowserRouter>
   );
