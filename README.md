@@ -1,1 +1,1 @@
-Repositório do projeto Ecotroca..
+Repositório do projeto Ecotroca.
