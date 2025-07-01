@@ -1,11 +1,13 @@
 import styles from "./Header.module.css"
 import { Link } from "react-router-dom";
+import Logo from '../../assets/logoeco.png'
 
 function Header() {
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid">
         <Link className={styles.decoration} to="/">
+        <img src={Logo} alt="" width={80}/>
         <span className="navbar-brand">EcoTroca</span>
         </Link>
         <form className="d-flex" role="search">
