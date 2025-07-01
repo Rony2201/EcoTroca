@@ -1,1 +1,1 @@
-teste
+Repositório do projeto Ecotroca
