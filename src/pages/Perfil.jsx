@@ -1,9 +1,11 @@
-
+import ListaProdutos from "../components/ListaProdutos";
 
 function Perfil() {
   return (
-    <div>Perfil</div>
-  )
+    <>
+      <ListaProdutos />
+    </>
+  );
 }
 
-export default Perfil
+export default Perfil;

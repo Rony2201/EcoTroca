@@ -1,11 +1,13 @@
-import ListaProdutos from "../components/ListaProdutos"
+import Banner from "../components/Banner/Banner";
+import Sobre from "../components/Sobre/Sobre"
 
 
 function Home() {
   return (
     <>
-        <ListaProdutos />
-    </>
+    <Banner />
+    <Sobre />
+  </>
   )
 }
 

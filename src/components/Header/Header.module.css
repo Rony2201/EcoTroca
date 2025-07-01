@@ -1,0 +1,12 @@
+.categories {
+    margin-right: 5px;
+}
+.decoration {
+    text-decoration: none !important;
+}
+.loginButton:hover {
+    background: #FF0000;
+    border: 1px solid #FF0000;
+}
+:global(.navbar.bg-body-tertiary) {
+    border-bottom: 1px solid #CCC; }

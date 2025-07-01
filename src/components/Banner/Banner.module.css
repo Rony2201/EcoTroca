@@ -1,0 +1,15 @@
+.banner {
+    position: relative;
+    overflow: hidden;
+    color: #FFF;
+    height: 400px;
+}
+
+.bannerBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url(/images/banner.png);
+    background-size: cover;
+    background-position: 0% 55%;
+}
