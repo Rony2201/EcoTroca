@@ -1,8 +1,12 @@
+import FormLogin from "../components/FormLogin/FormLogin"
 
 
 function Login() {
   return (
-    <div>Login</div>
+    <div className="container">
+      <FormLogin />
+    </div>
+
   )
 }
 
