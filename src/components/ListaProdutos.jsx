@@ -1,5 +1,6 @@
 import produtos from '../database/produtos';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import users from '../database/users';
 
 function ListaProdutos() {
   return (

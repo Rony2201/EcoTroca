@@ -8,7 +8,7 @@ import About from "./pages/About.jsx";
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <Header />
+      <Header/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
