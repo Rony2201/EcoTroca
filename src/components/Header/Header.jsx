@@ -1,8 +1,14 @@
 import styles from "./Header.module.css"
 import { Link } from "react-router-dom";
 import Logo from '../../assets/logoeco.png'
+import { AuthContext} from '../../context/authHandler'
+import { useContext } from "react";
 
 function Header() {
+
+  const { handleLogout } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
+
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid">
@@ -20,9 +26,13 @@ function Header() {
           <Link to="/about">
           <span className={`btn btn-outline-success ${styles.categories}`}>Sobre</span>
           </Link>
+          {isLoggedIn? (
+          <span onClick={handleLogout} className={`btn btn-outline-success ${styles.loginButton}`}>Sair</span>
+            ):(
           <Link to="/login">
-          <span className={`btn btn-outline-success ${styles.loginButton}`}>Login</span>
+            <span className={`btn btn-outline-success ${styles.loginButton}`}>Login</span>
           </Link>
+            )}
         </form>
       </div>
     </nav>

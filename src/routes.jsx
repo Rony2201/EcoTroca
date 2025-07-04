@@ -4,10 +4,13 @@ import Login from "./pages/Login";
 import Perfil from "./pages/Perfil"
 import Header from "./components/Header/Header";
 import About from "./pages/About.jsx";
+import AuthProvider from "./context/authHandler.jsx";
 
 function AppRoutes() {
   return (
+ 
     <BrowserRouter>
+      <AuthProvider>
       <Header/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -15,7 +18,9 @@ function AppRoutes() {
         <Route path="/perfil" element={<Perfil />}></Route>
         <Route path="/about" element={<About />}></Route>
       </Routes>
+    </AuthProvider>
     </BrowserRouter>
+
   );
 }
 

@@ -2,9 +2,13 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styles from './FormLogin.module.css';
 import users from '../../database/users';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authHandler';
 
 function FormLogin() {
   const navigate = useNavigate();
+  const { handleLogin } = useContext(AuthContext);
+
 
 
   const {
@@ -23,6 +27,8 @@ function FormLogin() {
     );
 
     if(user) {
+        handleLogin();
+        console.log('Logado com sucesso');
         navigate('/perfil');
     } else {
       alert('Email ou senha incorretos');
