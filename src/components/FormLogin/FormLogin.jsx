@@ -19,7 +19,6 @@ function FormLogin() {
 
 
   const onSubmit = (data) => {
-    console.log(data);
 
 
     const user = users.find(
@@ -29,7 +28,6 @@ function FormLogin() {
     if(user) {
         handleLogin();
         console.log('Logado com sucesso');
-        navigate('/perfil');
     } else {
       alert('Email ou senha incorretos');
     }

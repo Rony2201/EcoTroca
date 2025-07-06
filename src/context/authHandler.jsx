@@ -11,6 +11,7 @@ function AuthProvider({ children }) {
 
     const handleLogin = () => {
         setIsLoggedIn(true);
+        navigate('/perfil');
     };
     const handleLogout = () => {
         setIsLoggedIn(false);
