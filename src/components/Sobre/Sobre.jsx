@@ -1,4 +1,6 @@
 import styles from "./Sobre.module.css";
+import Cards from "./Cards/Cards"
+
 
 function Sobre() {
   return (
@@ -36,51 +38,36 @@ function Sobre() {
             <div className="col-md-4">
               <div className={`card h-100 shadow-sm ${styles.cardHover}`}>
                 <div className="card-body">
-                  <h5 className="card-title">1. Cadastre-se</h5>
-                  <p className="card-text">
-                    Crie sua conta gratuitamente para começar a participar.
-                  </p>
+                  <Cards title="1. Cadastre-se" paragrafo=" Crie sua conta gratuitamente para começar a participar." />
                 </div>
               </div>
             </div>
             <div className="col-md-4">
               <div className={`card h-100 shadow-sm ${styles.cardHover}`}>
                 <div className="card-body">
-                  <h5 className="card-title">2. Anuncie</h5>
-                  <p className="card-text">
-                    Publique os itens que deseja trocar com fotos e descrição.
-                  </p>
+                  <Cards title="2. Anuncie" paragrafo="Publique os itens que deseja trocar com fotos e descrição." />
                 </div>
               </div>
             </div>
             <div className="col-md-4">
               <div className={`card h-100 shadow-sm ${styles.cardHover}`}>
                 <div className="card-body">
-                  <h5 className="card-title">3. Encontre</h5>
-                  <p className="card-text">
-                    Busque itens de interesse e veja as oportunidades de troca.
-                  </p>
+                  <Cards title="3. Encontre" paragrafo="Busque itens de interesse e veja as oportunidades de troca." />
                 </div>
               </div>
             </div>
             <div className="col-md-4">
               <div className={`card h-100 shadow-sm ${styles.cardHover}`}>
                 <div className="card-body">
-                  <h5 className="card-title">4. Proponha</h5>
-                  <p className="card-text">
-                    Converse com outros usuários e proponha trocas justas.
-                  </p>
+                  <Cards title="4. Proponha" paragrafo="Converse com outros usuários e proponha trocas justas." />
                 </div>
               </div>
             </div>
             <div className="col-md-4">
               <div className={`card h-100 shadow-sm ${styles.cardHover}`}>
                 <div className="card-body">
-                  <h5 className="card-title">5. Finalize</h5>
-                  <p className="card-text">
-                    Conclua a troca e avalie a experiência para ajudar a
-                    comunidade.
-                  </p>
+                  <Cards title="5. Finalize" paragrafo="Conclua a troca e avalie a experiência para ajudar a
+                    comunidade." />
                 </div>
               </div>
             </div>
