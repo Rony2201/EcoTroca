@@ -1,4 +1,4 @@
-import ListaProdutos from "../components/ListaProdutos";
+import ListaProdutos from "../components/ListaProdutos/ListaProdutos";
 
 function Perfil() {
   return (

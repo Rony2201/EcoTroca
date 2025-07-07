@@ -5,6 +5,7 @@ import Perfil from "./pages/Perfil"
 import Header from "./components/Header/Header";
 import About from "./pages/About.jsx";
 import AuthProvider from "./context/authHandler.jsx";
+import CadastroProduto from "./pages/CadastroProduto.jsx";
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/perfil" element={<Perfil />}></Route>
         <Route path="/about" element={<About />}></Route>
+        <Route path="/cadastro" element={<CadastroProduto />}></Route>
       </Routes>
     </AuthProvider>
     </BrowserRouter>

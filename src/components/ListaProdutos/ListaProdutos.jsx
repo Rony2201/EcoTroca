@@ -1,11 +1,28 @@
-import produtos from '../database/produtos';
+import produtos from '../../database/produtos';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import users from '../database/users';
+import styles from './ListaProdutos.module.css'
+import { useNavigate } from 'react-router';
 
 function ListaProdutos() {
+  const navigate = useNavigate();
+
+  const handleCadastro = () => {
+
+    navigate('/cadastro')
+  }
+
+
   return (
     <div className="container mt-4">
-      <h2>Lista de Produtos</h2>
+       <div className={styles.container_h2}>
+        <h2>Lista de Produtos</h2>
+        <div className={styles.container_divs}>
+          <input type="search" placeholder="Buscar produto..." />
+          <button type="button" className="btn btn-success" onClick={handleCadastro}>
+            Cadastrar
+          </button>
+        </div>
+      </div>
       <div className="row">
         {produtos.map(produto => (
           <div className="col-md-4 mb-3" key={produto.id}>

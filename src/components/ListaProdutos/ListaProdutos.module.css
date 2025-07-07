@@ -1,0 +1,24 @@
+.container_h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.container_divs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.container_divs input {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+
+.container_divs button {
+  height: 40px;
+}

@@ -1,8 +1,14 @@
+import Cadastrar from "../components/Cadastrar/Cadastrar"
 
 
 function CadastroProduto() {
   return (
-    <div>CadastroProduto</div>
+    <>
+    <div className="container">
+      <Cadastrar />
+    </div>
+
+    </>
   )
 }
 

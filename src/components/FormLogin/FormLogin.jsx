@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import styles from './FormLogin.module.css';
 import users from '../../database/users';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authHandler';
 
 function FormLogin() {
-  const navigate = useNavigate();
+  
   const { handleLogin } = useContext(AuthContext);
 
 
