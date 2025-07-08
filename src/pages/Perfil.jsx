@@ -1,9 +1,9 @@
-import ListaProdutos from "../components/ListaProdutos/ListaProdutos";
+import SeusProdutos from "../components/SeusProdutos/SeusProdutos";
 
 function Perfil() {
   return (
     <>
-      <ListaProdutos />
+      <SeusProdutos />
     </>
   );
 }

@@ -30,16 +30,3 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
-.card-custom {
-  height: 100%; /* faz o card preencher a altura do container pai */
-  display: flex;
-  flex-direction: column;
-}
-
-.card-body {
-  flex-grow: 1; /* faz o conteúdo se expandir para preencher o espaço restante */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}

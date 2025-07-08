@@ -16,23 +16,17 @@ function ListaProdutos() {
     <div className="container mt-4">
        <div className={styles.container_h2}>
         <h2>Lista de Produtos</h2>
-        <div className={styles.container_divs}>
-          <input type="search" placeholder="Buscar produto..." />
-          <button type="button" className="btn btn-success" onClick={handleCadastro}>
-            Cadastrar
-          </button>
-        </div>
       </div>
       <div className="row">
         {produtos.map(produto => (
           <div className="col-md-4 mb-3" key={produto.id}>
-            <div className="card">
+            <div className={`card ${styles['card-custom']}`}>
               <img
                 src={produto.imgURL}
-                className="card-img-top"
+                className={`card-img-top ${styles['card-img-top']}`}
                 alt={produto.nome}
               />
-              <div className="card-body">
+              <div className={`card-body ${styles['card-body']}`}>
                 <h3 className="card-title">{produto.nome}</h3>
                 <p className="card-text">{produto.descricao}</p>
                 <p className="card-text">{produto.loca}</p>
