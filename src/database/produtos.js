@@ -20,6 +20,30 @@ const produtos = [
     imgURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwUe7ATdIUIn9eupcapbrNyoQ3ufHJUJOSeA&s',
     loca: 'Rua Princesa Isabel, 718 - Centro'
   }
+  ,
+  {
+    id: 4,
+    nome: 'Celular antigo',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
+    imgURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwUe7ATdIUIn9eupcapbrNyoQ3ufHJUJOSeA&s',
+    loca: 'Rua Princesa Isabel, 718 - Centro'
+  }
+  ,
+  {
+    id: 5,
+    nome: 'Celular antigo',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
+    imgURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwUe7ATdIUIn9eupcapbrNyoQ3ufHJUJOSeA&s',
+    loca: 'Rua Princesa Isabel, 718 - Centro'
+  }
+  ,
+  {
+    id: 6,
+    nome: 'Celular antigo',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
+    imgURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwUe7ATdIUIn9eupcapbrNyoQ3ufHJUJOSeA&s',
+    loca: 'Rua Princesa Isabel, 718 - Centro'
+  }
 ];
 
 export default produtos;
