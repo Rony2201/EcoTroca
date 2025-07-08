@@ -1,35 +1,20 @@
 import { useForm } from 'react-hook-form';
 import styles from './FormLogin.module.css';
-import users from '../../database/users';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authHandler';
 
 function FormLogin() {
-  
   const { handleLogin } = useContext(AuthContext);
-
-
 
   const {
     register,
     handleSubmit,
-    formState: { errors }, 
+    formState: { errors },
   } = useForm();
 
-
   const onSubmit = (data) => {
-
-
-    const user = users.find(
-      (user) => user.email === data.email && user.password === data.senha
-    );
-
-    if(user) {
-        handleLogin();
-        console.log('Logado com sucesso');
-    } else {
-      alert('Email ou senha incorretos');
-    }
+    // Agora apenas chamamos handleLogin e deixamos ele lidar com a verificação
+    handleLogin(data.email, data.senha);
   };
 
   return (
