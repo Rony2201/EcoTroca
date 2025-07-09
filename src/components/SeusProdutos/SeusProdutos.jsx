@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './SeusProdutos.module.css';
 import { AuthContext } from '../../context/authHandler';
 
-function SeusProdutos() {
+function SeusProdutos({ produto }) {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
