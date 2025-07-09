@@ -20,6 +20,9 @@ function Header() {
           <Link to="/">
           <span className={`btn btn-outline-success ${styles.categories}`}>Home</span>
           </Link>
+          <Link to="/todosprodutos">
+          <span className={`btn btn-outline-success ${styles.categories}`}>Todos Produtos</span>
+          </Link>
           <Link to="/perfil">
           <span href="#" className={`btn btn-outline-success ${styles.categories}`}>Perfil</span>
           </Link>
