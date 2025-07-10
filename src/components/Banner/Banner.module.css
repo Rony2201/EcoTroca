@@ -13,3 +13,10 @@
     background-size: cover;
     background-position: 0% 55%;
 }
+
+@media (max-width: 768px) {
+    .bannerBg {
+        background-image: url(/images/banner.png);
+        background-position: 45% 0%;
+    }
+}
