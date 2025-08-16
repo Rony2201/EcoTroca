@@ -1,3 +1,11 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") 
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
 
 enum ProductStatus {
   AVAILABLE
@@ -26,6 +34,7 @@ model User {
   lastOwnedProducts Product[]    @relation("ProductLastOwner")
   offers            TradeOffer[]
   messages          Message[]
+  ownershipHistory  Ownership[]
 
 
   createdAt DateTime @default(now())
@@ -64,6 +73,7 @@ model Product {
   categoryId  Int?
 
   offers      TradeOffer[]
+  ownershipHistory Ownership[]
 
  
   createdAt   DateTime    @default(now())
