@@ -1,6 +1,6 @@
-import createProduct from "../models/productModel.js";
+import { createProduct, getAllProducts } from "../models/productModel.js";
 
-const productRegister = async (req, res) => {
+export const productRegister = async (req, res) => {
   const { title, description, condition, status, imageUrl, city, district, address, ownerId, categoryId } = req.body;
 
   try {
@@ -24,4 +24,12 @@ const productRegister = async (req, res) => {
   }
 };
 
-export default productRegister;
+export const getAllProductsController = async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    res.status(200).json({ products, message: "Todos os produtos encontrados com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao buscar produtos:", error);
+    res.status(500).json({ error: error.message, message: "Erro ao buscar produtos" });
+  }
+};
