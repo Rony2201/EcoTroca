@@ -1,5 +1,6 @@
 import express from 'express';
-import loginRoutes from './routes/loginRoutes.js';
+import register from './routes/registerRoutes.js'
+import productRegister from './routes/productRoutes.js';
 
 const app = express();
 
@@ -9,7 +10,8 @@ app.use(express.json());
 app.get('/', (req,res) => {
     res.send('Hello World')
 });
-app.use('/register', loginRoutes);
+app.use('/register', register);
+app.use('/product', productRegister)
 
 
 

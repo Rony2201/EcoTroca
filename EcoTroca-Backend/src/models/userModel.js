@@ -1,12 +1,8 @@
 import prisma from '../prisma.js';
 
-const register = async (email, password, username) => {
+const register = async (data) => {
     return prisma.user.create({
-        data:{
-            email: email,
-            password: password,
-            username: username
-        }
+        data
     })
 }
 
