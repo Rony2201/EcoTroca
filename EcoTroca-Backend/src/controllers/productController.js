@@ -24,6 +24,19 @@ export const productRegister = async (req, res) => {
   }
 };
 
+export const updateProducts = async (req, res) => {
+  const id = req.params.id;
+  const { data } = req.body;
+
+  try {
+    const updateProduct = await updateProducts({ id, data});
+    res.status(201).json({ product: updateProduct, message: "Produto editado com sucesso!"});
+  } catch(error) {
+    console.error("Erro ao editar produto:", error);
+    res.status(500).json({error: error.message, message: "Erro ao editar produto"});
+  }
+};
+
 export const getAllProductsController = async (req, res) => {
   try {
     const products = await getAllProducts();

@@ -21,37 +21,30 @@ enum OfferStatus {
   CANCELLED
 }
 
-
-model User {
-  // Fields
+model Users {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
   username  String   @unique
 
- 
   ownedProducts     Product[]    @relation("ProductOwner")
   lastOwnedProducts Product[]    @relation("ProductLastOwner")
   offers            TradeOffer[]
   messages          Message[]
   ownershipHistory  Ownership[]
 
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Category {
-  // Fields
   id       Int       @id @default(autoincrement())
   name     String    @unique
 
-  // Relations
   products Product[]
 }
 
 model Product {
-  // Fields
   id_product  Int         @id @default(autoincrement())
   title       String
   description String
@@ -62,34 +55,29 @@ model Product {
   district    String?
   address     String?
 
-
-  owner       User?       @relation("ProductOwner", fields: [ownerId], references: [id])
+  owner       Users?       @relation("ProductOwner", fields: [ownerId], references: [id])
   ownerId     Int?
 
-  lastOwner   User?       @relation("ProductLastOwner", fields: [lastOwnerId], references: [id])
+  lastOwner   Users?       @relation("ProductLastOwner", fields: [lastOwnerId], references: [id])
   lastOwnerId Int?
 
-  category    Category?   @relation(fields: [categoryId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
   categoryId  Int?
 
   offers      TradeOffer[]
   ownershipHistory Ownership[]
 
- 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
- 
   @@index([status, categoryId, city])
 }
 
 model TradeOffer {
-
   id          Int         @id @default(autoincrement())
   status      OfferStatus @default(PENDING)
 
-
-  proposer    User        @relation(fields: [proposerId], references: [id])
+  proposer    Users       @relation(fields: [proposerId], references: [id])
   proposerId  Int
 
   product     Product     @relation(fields: [productId], references: [id_product])
@@ -97,42 +85,33 @@ model TradeOffer {
 
   messages    Message[]
 
-
   createdAt   DateTime    @default(now())
-
 
   @@unique([proposerId, productId])
 }
 
 model Message {
-
   id        Int      @id @default(autoincrement())
   content   String
   sentAt    DateTime @default(now())
 
-
   offer     TradeOffer @relation(fields: [offerId], references: [id])
   offerId   Int
 
-  author    User     @relation(fields: [authorId], references: [id])
+  author    Users      @relation(fields: [authorId], references: [id])
   authorId  Int
 }
 
-
 model Ownership {
-
   id        Int      @id @default(autoincrement())
-
 
   product   Product  @relation(fields: [productId], references: [id_product])
   productId Int
 
-  user      User     @relation(fields: [userId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id])
   userId    Int
 
-
   changedAt DateTime @default(now())
-
 
   @@index([productId, changedAt])
 }
