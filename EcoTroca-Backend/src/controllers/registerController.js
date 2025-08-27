@@ -1,27 +1,35 @@
-import register from "../models/userModel.js";
+import {register} from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { authenticateToken } from "../middlewares/auth.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Função para registrar novo usuário
+
 export const userRegister = async (req, res) => {
-  const { email, password, username } = req.body;
+  
 
   try {
+    const { email, password, username } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await register({ email, password: hashedPassword, username });
+        const token = jwt.sign(
+      { id: newUser.id, email: newUser.email },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-    res.status(201).json({ user: newUser, message: "Usuário criado com sucesso!" });
+    res.status(201).json({
+      user: newUser,
+      message: "Usuário criado com sucesso!",
+      token
+    });
   } catch (error) {
     res.status(500).json({ error: error.message || error, message: "Erro ao criar usuário" });
   }
 };
 
-// Função para login
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
 
