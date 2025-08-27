@@ -1,4 +1,4 @@
-import register from "../models/userModel.js";
+import { register } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { authenticateToken } from "../middlewares/auth.js";
