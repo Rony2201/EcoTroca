@@ -13,6 +13,7 @@ export const register = async (data) => {
   return prisma.users.create({
     data: {
       username: data.username,
+      email: data.email,
       password: hashedPassword
     }
   });
