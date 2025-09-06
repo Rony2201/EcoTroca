@@ -41,3 +41,9 @@ export const login = async (data) => {
 
   return { token };
 };
+
+export const findByEmail = async (email) => {
+  return prisma.users.findUnique({
+    where: { email: email }
+  });
+};

@@ -1,4 +1,4 @@
-import { register } from "../models/userModel.js";
+import { register, findByEmail } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -51,16 +51,18 @@ export const userRegister = async (req, res) => {
 
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
-    const user = await register.findByEmail(email);
+    const user = await findByEmail(email);
+
     if (!user) {
       return res.status(401).json({ error: "Usuário não encontrado" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Senha incorreta" });
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Senha inválida" });
     }
 
     const token = jwt.sign(

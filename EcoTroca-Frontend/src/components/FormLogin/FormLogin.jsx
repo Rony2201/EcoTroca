@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/authHandler';
 import { Link } from 'react-router-dom';
 
 function FormLogin() {
-  const { handleLogin } = useContext(AuthContext);
+  const { handleLogin, error, loading } = useContext(AuthContext);
 
   const {
     register,
@@ -14,13 +14,13 @@ function FormLogin() {
   } = useForm();
 
   const onSubmit = (data) => {
-    // Agora apenas chamamos handleLogin e deixamos ele lidar com a verificação
-    handleLogin(data.email, data.senha);
+    handleLogin(data.email, data.password); // Corrigido para 'password'
   };
 
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email:
@@ -36,27 +36,34 @@ function FormLogin() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="passwordInput" className="form-label">
             Senha:
           </label>
           <input
             type="password"
             className={`form-control ${styles.input}`}
-            id="exampleInputPassword1"
-            {...register('senha', { required: 'Senha é obrigatória' })}
+            id="passwordInput"
+            // Corrigido para 'password' no register
+            {...register('password', { required: 'Senha é obrigatória' })}
           />
-          {errors.senha && <span>{errors.senha.message}</span>}
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
 
         <button
           type="submit"
           className={`btn btn-primary ${styles.button}`}
+          disabled={loading}
         >
-          Entrar
+          {loading ? 'Entrando...' : 'Entrar'}
         </button>
+
+        {error && (
+          <div className="alert alert-danger mt-3" role="alert">
+            {error}
+          </div>
+        )}
       </form>
-      
-      {/*Link para criar conta*/}
+
       <div className="mt-3 text-center">
         <p>Ainda não tem uma conta? <Link to="/criarConta">Crie a sua aqui.</Link></p>
       </div>
