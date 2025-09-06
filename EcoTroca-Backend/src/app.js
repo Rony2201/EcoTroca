@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import register from './routes/registerRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
@@ -13,7 +14,6 @@ app.use(cors({
   methods: ['GET','POST','PUT','DELETE'],
   credentials: true
 }));
-
 
 app.use(express.json());
 
