@@ -1,4 +1,11 @@
-import { createProduct, getAllProducts, getProductById } from "../models/productModel.js";
+// src/controllers/productController.js
+import { 
+  createProduct, 
+  getAllProducts, 
+  getProductById,
+  updateProducts,
+} from "../models/productModel.js";
+import prisma from "../prisma.js";
 
 export const productRegister = async (req, res) => {
   const { title, description, condition, status, imageUrl, city, district, address, ownerId, categoryId } = req.body;
@@ -24,13 +31,13 @@ export const productRegister = async (req, res) => {
   }
 };
 
-export const updateProducts = async (req, res) => {
+export const updateProductController = async (req, res) => {
   const id = req.params.id;
-  const { data } = req.body;
+  const updateData = req.body;
 
   try {
-    const updateProduct = await updateProducts({ id, data});
-    res.status(201).json({ product: updateProduct, message: "Produto editado com sucesso!"});
+    const updatedProduct = await updateProducts(id, updateData);
+    res.status(200).json({ product: updatedProduct, message: "Produto editado com sucesso!"});
   } catch(error) {
     console.error("Erro ao editar produto:", error);
     res.status(500).json({error: error.message, message: "Erro ao editar produto"});
@@ -57,3 +64,29 @@ export const getProductId = async (req, res) => {
     res.status(500).json({error: error.message, message: "Erro ao encontrar produto"});
   }
 }
+
+// Controller para buscar produtos de um usuário específico
+export const getProductsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    // Converte o userId para um número, pois ele vem como string da URL
+    const id = parseInt(userId);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "ID de usuário inválido." });
+    }
+
+    // Busca os produtos onde o 'ownerId' é igual ao 'id' do usuário
+    const products = await prisma.product.findMany({
+      where: {
+        ownerId: id,
+      },
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Erro ao buscar produtos do usuário:', error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+};

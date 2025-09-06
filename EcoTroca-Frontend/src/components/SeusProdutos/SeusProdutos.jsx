@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react';
+// src/components/SeusProdutos/SeusProdutos.jsx
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import produtos from '../../database/produtos';
+import api from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './SeusProdutos.module.css';
 import { AuthContext } from '../../context/authHandler';
@@ -8,18 +9,49 @@ import { PropostaContext } from '../../context/PropostaContext';
 
 function SeusProdutos() {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext); // Pega o estado 'user' e renomeia 'loading' para 'authLoading'
   const { propostas } = useContext(PropostaContext);
+
+  // Gerenciamento fos produtos da API, carregamento e erro
+  const [produtosDoUsuario, setProdutosDoUsuario] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [busca, setBusca] = useState("");
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
-  const produtosDoUsuario = produtos
-    .filter(produto => produto.idDono === user?.id)
-    .reverse();
+  // useEffect para buscar os produtos do usuário
+  useEffect(() => {
+    // Função assíncrona para buscar os produtos
+    const fetchUserProducts = async () => {
+      // Verifica se o usuário e o id existem antes de fazer a chamada
+      if (user && user.id) {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await api.get(`/products/user/${user.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          setProdutosDoUsuario(response.data);
+          setIsLoading(false);
+        } catch (err) {
+          setError('Erro ao carregar seus produtos.');
+          setIsLoading(false);
+          console.error(err);
+        }
+      }
+    };
+
+    // Só faz a busca se o contexto de autenticação já tiver carregado e houver um usuário
+    if (!authLoading && user) {
+      fetchUserProducts();
+    }
+  }, [user, authLoading]); // A dependência [user] e [authLoading] garante que a busca seja feita quando o usuário for carregado
 
   const produtosFiltrados = produtosDoUsuario.filter(produto =>
-    produto.nome.toLowerCase().includes(busca.toLowerCase())
+    produto.title.toLowerCase().includes(busca.toLowerCase())
   );
 
   const handleCadastro = () => {
@@ -41,7 +73,7 @@ function SeusProdutos() {
   return (
     <div className="container mt-4">
       <div className={styles.container_h2}>
-        <h2>{user?.nome} - Seus Produtos</h2>
+        <h2>Olá, {user?.username} - Seus Produtos</h2>
         <div className={styles.container_divs}>
           <input
             type="search"
@@ -58,27 +90,31 @@ function SeusProdutos() {
       </div>
 
       <div className="row">
-        {produtosFiltrados.length > 0 ? (
-          produtosFiltrados.map(produto => (
-            <div className="col-md-4 mb-3" key={produto.id}>
-              <div className={`card ${styles['card-custom']}`}>
-                <img
-                  src={produto.imgURL}
-                  className={`card-img-top ${styles['card-img-top']}`}
-                  alt={produto.nome}
-                />
-                <div className={`card-body ${styles['card-body']}`}>
-                  <h3 className="card-title">{produto.nome}</h3>
-                  <p className="card-text">{produto.descricao}</p>
-                  <p className="card-text">{produto.loca}</p>
-                  <button className="btn btn-primary">Editar Produto</button>
+        {isLoading && <p>Carregando seus produtos...</p>}
+        {error && <p className="text-danger">{error}</p>}
 
+        {!isLoading && !error && (
+          produtosFiltrados.length > 0 ? (
+            produtosFiltrados.map(produto => (
+              <div className="col-md-4 mb-3" key={produto.id}>
+                <div className={`card ${styles['card-custom']}`}>
+                  <img
+                    src={produto.imageUrl}
+                    className={`card-img-top ${styles['card-img-top']}`}
+                    alt={produto.title}
+                  />
+                  <div className={`card-body ${styles['card-body']}`}>
+                    <h3 className="card-title">{produto.title}</h3>
+                    <p className="card-text">{produto.description}</p>
+                    <p className="card-text">{produto.city} - {produto.district}</p>
+                    <button className="btn btn-primary">Editar Produto</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>Você ainda não cadastrou produtos.</p>
+            ))
+          ) : (
+            <p>Você ainda não cadastrou produtos.</p>
+          )
         )}
       </div>
 

@@ -1,5 +1,4 @@
-// src/context/authHandler.jsx
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
@@ -9,10 +8,28 @@ export const AuthContext = createContext();
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false); // Adiciona estado de carregamento
-  const [error, setError] = useState(null); // Adiciona estado de erro
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      try {
+        const decodedUser = jwtDecode(storedToken);
+        if (decodedUser.exp * 1000 > Date.now()) {
+          setIsLoggedIn(true);
+          setUser(decodedUser);
+        } else {
+          localStorage.removeItem('token');
+        }
+      } catch (err) {
+        localStorage.removeItem('token');
+      }
+    }
+    setLoading(false);
+  }, []);
 
   const handleLogin = async (email, password) => {
     setLoading(true); // Inicia o estado de carregamento

@@ -1,3 +1,4 @@
+// src/models/productModel.js
 import prisma from "../prisma.js";
 
 export const createProduct = async (data) => {
@@ -16,7 +17,17 @@ export const getProductById = async (id) => {
 
 export const updateProducts = async (id, updateData) => {
   return prisma.product.update({
-    where: { id: Number(id) },
+    where: { id_product: Number(id) },
     data: updateData,
   });
+}
+
+// Model para buscar produtos de um usuário específico
+export const getProductsByUserId = async (userId) => {
+  const products = await prisma.product.findMany({
+    where: {
+      ownerId: userId,
+    },
+  });
+  return products;
 }
