@@ -8,13 +8,12 @@ dotenv.config();
 const SECRET = process.env.JWT_SECRET;
 
 export const register = async (data) => {
-  const hashedPassword = await bcrypt.hash(data.password, 10);
-
+  // A senha já vem hasheada do controller, então a usamos diretamente.
   return prisma.users.create({
     data: {
       username: data.username,
       email: data.email,
-      password: hashedPassword
+      password: data.password
     }
   });
 };

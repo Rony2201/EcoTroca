@@ -1,3 +1,4 @@
+// routes.jsx
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -8,6 +9,7 @@ import CadastroProduto from "./pages/CadastroProduto";
 import PrivateRoute from "./components/PrivateRoute";
 import ListaProdutos from "./components/ListaProdutos/ListaProdutos";
 import Detalhes from './pages/Detalhes'
+import CriarConta from "./pages/criarConta";
 
 function AppRoutes() {
   return (
@@ -28,8 +30,8 @@ function AppRoutes() {
         <Route path="/cadastro" element={<CadastroProduto />} />
         <Route path="/todosprodutos" element={<ListaProdutos />} />
         <Route path="/detalhes/:id" element={<Detalhes />} />
+        <Route path="/criarConta" element={<CriarConta />} />
       </Routes>
-      
     </>
   );
 }

@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import styles from './FormLogin.module.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authHandler';
+import { Link } from 'react-router-dom';
 
 function FormLogin() {
   const { handleLogin } = useContext(AuthContext);
@@ -54,6 +55,11 @@ function FormLogin() {
           Entrar
         </button>
       </form>
+      
+      {/*Link para criar conta*/}
+      <div className="mt-3 text-center">
+        <p>Ainda não tem uma conta? <Link to="/criarConta">Crie a sua aqui.</Link></p>
+      </div>
     </div>
   );
 }
