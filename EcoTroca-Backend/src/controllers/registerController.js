@@ -2,6 +2,7 @@ import { register } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { Prisma } from "@prisma/client";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -33,10 +34,18 @@ export const userRegister = async (req, res) => {
       token
     });
   } catch (error) {
-    res.status(500).json({
-      error: error.message || error,
-      message: "Erro ao criar usuário"
-    });
+    // Verificando se o erro é uma violação de restrição única do Prisma
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      res.status(409).json({
+        error: "Conflito de dados",
+        message: "O e-mail ou nome de usuário já está em uso."
+      });
+    } else {
+      res.status(500).json({
+        error: error.message || error,
+        message: "Erro ao criar usuário"
+      });
+    }
   }
 };
 
