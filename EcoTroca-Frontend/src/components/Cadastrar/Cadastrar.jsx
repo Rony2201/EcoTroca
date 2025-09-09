@@ -1,110 +1,99 @@
-import { useState, useEffect } from 'react';
-import styles from './Cadastrar.module.css';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
+import styles from "./Cadastrar.module.css";
 
-function Cadastrar() {
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [localizacao, setLocalizacao] = useState('');
-  const [imagem, setImagem] = useState(null);
-  const [produtos, setProdutos] = useState([]); 
+const Cadastrar = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const [message, setMessage] = useState("");
 
-
-  useEffect(() => {
-    const produtosSalvos = localStorage.getItem('produtos');
-    if (produtosSalvos) {
-      setProdutos(JSON.parse(produtosSalvos));
+  const onSubmit = async (data) => {
+    try {
+      data.ownerId = Number(data.ownerId);
+      data.categoryId = Number(data.categoryId);
+      const response = await axios.post("http://localhost:3000/product", data);
+      setMessage(response.data.message);
+      reset();
+    } catch (error) {
+      console.error("Erro ao enviar produto:", error);
+      setMessage(error.response?.data?.message || "Erro ao enviar produto");
     }
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-
-    const novoProduto = {
-      id: Date.now(),  // para gerar um ID único
-      nome,
-      descricao,
-      localizacao,
-      imagem: imagem ? imagem.name : null, 
-    };
-
-    const produtosAtualizados = [...produtos, novoProduto];
-    setProdutos(produtosAtualizados);
-
-
-    localStorage.setItem('produtos', JSON.stringify(produtosAtualizados));
-
-
-    setNome('');
-    setDescricao('');
-    setLocalizacao('');
-    setImagem(null);
   };
 
   return (
-    <div className={`container mt-5 p-4 shadow ${styles.formWrapper}`}>
-      <h2 className="mb-4 text-center">Cadastrar Produto</h2>
-
-      <form onSubmit={handleSubmit}> 
-        <div className="mb-3 row">
-          <label htmlFor="nomeProduto" className="col-sm-2 col-form-label">Nome</label>
-          <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              id="nomeProduto"
-              placeholder="Digite o nome do produto"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-            />
-          </div>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Cadastrar Produto</h2>
+      {message && <p className={styles.message}>{message}</p>}
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label>Título:</label>
+          <input type="text" {...register("title", { required: true })} />
         </div>
 
-        <div className="mb-3 row">
-          <label htmlFor="descricaoProduto" className="col-sm-2 col-form-label">Descrição</label>
-          <div className="col-sm-10">
-            <textarea
-              className="form-control"
-              id="descricaoProduto"
-              placeholder="Digite a descrição"
-              rows="3"
-              value={descricao}
-              onChange={(e) => setDescricao(e.target.value)}
-            ></textarea>
-          </div>
+        <div className={styles.formGroup}>
+          <label>Descrição:</label>
+          <textarea {...register("description", { required: true })}></textarea>
         </div>
 
-        <div className="mb-3 row">
-          <label htmlFor="localProduto" className="col-sm-2 col-form-label">Localização</label>
-          <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              id="localProduto"
-              placeholder="Digite a localização"
-              value={localizacao}
-              onChange={(e) => setLocalizacao(e.target.value)}
-            />
-          </div>
+        <div className={styles.formGroup}>
+          <label>Condição:</label>
+          <select {...register("condition", { required: true })}>
+            <option value="">Selecione</option>
+            <option value="NEW">NOVO</option>
+            <option value="OLD">USADO</option>
+          </select>
         </div>
 
-        <div className="mb-3 row">
-          <label htmlFor="imagemProduto" className="col-sm-2 col-form-label">Imagem</label>
-          <div className="col-sm-10">
-            <input
-              type="file"
-              className="form-control"
-              id="imagemProduto"
-              onChange={(e) => setImagem(e.target.files[0])} 
-            />
-          </div>
+        <div className={styles.formGroup}>
+          <label>Status:</label>
+          <select {...register("status", { required: true })}>
+            <option value="">Selecione</option>
+            <option value="AVAILABLE">DISPONÍVEL</option>
+            <option value="RESERVED">RESERVADO</option>
+            <option value="EXCHANGED">TROCADO</option>
+            <option value="INACTIVE">INATIVO</option>
+          </select>
         </div>
 
-        <div className="text-center">
-          <button type="submit" className="btn btn-primary">Cadastrar Produto</button> 
+        <div className={styles.formGroup}>
+          <label>URL da Imagem:</label>
+          <input type="text" {...register("imageUrl", { required: true })} />
         </div>
+
+        <div className={styles.formGroup}>
+          <label>Cidade:</label>
+          <input type="text" {...register("city", { required: true })} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Bairro:</label>
+          <input type="text" {...register("district", { required: true })} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Endereço:</label>
+          <input type="text" {...register("address", { required: true })} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>ID do Dono:</label>
+          <input type="number" {...register("ownerId", { required: true })} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>ID da Categoria:</label>
+          <input
+            type="number"
+            {...register("categoryId", { required: true })}
+          />
+        </div>
+
+        <button type="submit" className={styles.submitButton}>
+          Cadastrar Produto
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default Cadastrar;

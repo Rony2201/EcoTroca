@@ -1,12 +1,12 @@
 // src/components/FormCriarConta/FormCriarConta.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
 
 const FormCriarConta = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -20,20 +20,23 @@ const FormCriarConta = () => {
     setSuccess(false);
 
     try {
-      const response = await api.post('/register', { username, email, password });
-      
-      console.log('Usuário registrado com sucesso!', response.data);
-      setSuccess(true);
-      
-      localStorage.setItem('token', response.data.token);
-      
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      const response = await api.post("/register", {
+        username,
+        email,
+        password,
+      });
 
+      console.log("Usuário registrado com sucesso!", response.data);
+      setSuccess(true);
+
+      localStorage.setItem("token", response.data.token);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
-      console.error('Erro no registro:', err);
-      setError(err.response?.data?.message || 'Ocorreu um erro no registro.');
+      console.error("Erro no registro:", err);
+      setError(err.response?.data?.message || "Ocorreu um erro no registro.");
     } finally {
       setIsLoading(false);
     }
@@ -82,7 +85,7 @@ const FormCriarConta = () => {
             className="btn btn-primary w-100"
             disabled={isLoading}
           >
-            {isLoading ? 'Cadastrando...' : 'Cadastrar'}
+            {isLoading ? "Cadastrando..." : "Cadastrar"}
           </button>
         </form>
 
