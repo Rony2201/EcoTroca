@@ -11,7 +11,7 @@ import { authenticateToken } from "../middlewares/auth.js";
 
 const productRouter = express.Router();
 
-productRouter.post("/product", authenticateToken, productRegister);
+productRouter.post("/product", productRegister);
 productRouter.get("/product", getAllProductsController);
 productRouter.get("/product/:id", getProductId);
 productRouter.put("/product/:id", authenticateToken, updateProductController);

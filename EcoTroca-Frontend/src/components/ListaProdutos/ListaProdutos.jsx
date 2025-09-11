@@ -1,14 +1,14 @@
-import { useState, useContext } from 'react';
-import produtos from '../../database/produtos';
+import { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './ListaProdutos.module.css';
 import Footer from '../Footer/Footer';
 import { PropostaContext } from '../../context/PropostaContext';
 import { AuthContext } from '../../context/authHandler';
-
 import { useNavigate } from 'react-router';
+import { getAllProducts } from '../../services/productsService';
 
 function ListaProdutos() {
+  const [produtos, setProdutos] = useState([]);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [descricaoProposta, setDescricaoProposta] = useState("");
   const [busca, setBusca] = useState("");
@@ -16,6 +16,21 @@ function ListaProdutos() {
 
   const { adicionarProposta } = useContext(PropostaContext);
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const data = await getAllProducts();
+        console.log('Retorno da API:', data);
+        setProdutos(data.products);
+        console.log("Produtos recebidos:", data.products);
+      } catch (error) {
+        console.error('Erro ao buscar produtos da API:', error);
+      }
+    };
+
+    fetchProdutos();
+  }, []);
 
   const handleAbrirModal = (produto) => {
     setProdutoSelecionado(produto);
@@ -27,8 +42,8 @@ function ListaProdutos() {
   };
 
   const handleRouter = (id) => {
-  navigate(`/detalhes/${id}`);
-};
+    navigate(`/detalhes/${id}`);
+  };
 
   const handleEnviarProposta = () => {
     if (!descricaoProposta || !produtoSelecionado || !user) return;
@@ -46,7 +61,7 @@ function ListaProdutos() {
   };
 
   const produtosFiltrados = produtos.filter(produto =>
-    produto.nome.toLowerCase().includes(busca.toLowerCase())
+    (produto?.nome ?? '').toLowerCase().includes(busca.toLowerCase())
   );
 
   return (
@@ -67,19 +82,20 @@ function ListaProdutos() {
         <div className="row mt-4">
           {produtosFiltrados.length > 0 ? (
             produtosFiltrados.map(produto => (
-              <div className="col-md-4 mb-3" key={produto.id}>
+              <div className="col-md-4 mb-3" key={produto.id_product}>
                 <div className={`card ${styles['card-custom']}`}>
                   <img
-                    src={produto.imgURL}
+                    src={produto.imageUrl || 'https://via.placeholder.com/150'}
                     className={`card-img-top ${styles['card-img-top']}`}
-                    alt={produto.nome}
-                    onClick={() => handleRouter(produto.id)}
+                    alt={produto.title}
+                    onClick={() => handleRouter(produto.id_product)}
                   />
                   <div className={`card-body ${styles['card-body']}`}>
-                    <h1 className="card-title">{produto.nome_dono}</h1>
-                    <h3 className="card-text">{produto.nome}</h3>
-                    <p className="card-text">{produto.descricao}</p>
-                    <p className="card-text">{produto.loca}</p>
+                    <h3 className="card-title">{produto.title}</h3>
+                    <p className="card-text"><strong>Descrição:</strong> {produto.description}</p>
+                    <p className="card-text"><strong>Condição:</strong> {produto.condition}</p>
+                    <p className="card-text"><strong>Status:</strong> {produto.status}</p>
+                    <p className="card-text"><strong>Localização:</strong> {produto.district}, {produto.city}</p>
                     <button
                       className="btn btn-primary"
                       onClick={() => handleAbrirModal(produto)}
@@ -93,6 +109,7 @@ function ListaProdutos() {
           ) : (
             <p>Nenhum produto encontrado.</p>
           )}
+
         </div>
 
         {produtoSelecionado && (
@@ -100,7 +117,6 @@ function ListaProdutos() {
             <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
               <div className="modal-dialog">
                 <div className="modal-content">
-
                   <div className="modal-header">
                     <h5 className="modal-title">Propor Troca para {produtoSelecionado.nome}</h5>
                     <button type="button" className="btn-close" onClick={handleFecharModal}></button>
@@ -126,7 +142,6 @@ function ListaProdutos() {
                       Enviar Proposta
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>
