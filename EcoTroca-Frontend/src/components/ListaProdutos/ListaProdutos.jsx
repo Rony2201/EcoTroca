@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './ListaProdutos.module.css';
 import Footer from '../Footer/Footer';
-import { PropostaContext } from '../../context/PropostaContext';
 import { AuthContext } from '../../context/authHandler';
 import { useNavigate } from 'react-router';
 import { getAllProducts } from '../../services/productsService';
+import { enviarProposta } from '../../services/enviarProposta';
 
 function ListaProdutos() {
   const [produtos, setProdutos] = useState([]);
@@ -14,7 +14,6 @@ function ListaProdutos() {
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
 
-  const { adicionarProposta } = useContext(PropostaContext);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -45,19 +44,21 @@ function ListaProdutos() {
     navigate(`/detalhes/${id}`);
   };
 
-  const handleEnviarProposta = () => {
+  const handleEnviarProposta = async () => {
     if (!descricaoProposta || !produtoSelecionado || !user) return;
 
-    adicionarProposta({
-      id: crypto.randomUUID(),
-      idProdutoDestino: produtoSelecionado.id,
-      idProponente: user.id,
-      nomeProponente: user.nome,
-      descricao: descricaoProposta
-    });
-
-    alert('Proposta enviada com sucesso!');
-    handleFecharModal();
+    try {
+      await enviarProposta({
+        proposerId: user.id,
+        productId: produtoSelecionado.id_product,
+        mensagem: descricaoProposta
+      });
+      alert('Proposta enviada com sucesso!');
+      handleFecharModal();
+    } catch (error) {
+      alert('Erro ao enviar proposta!');
+      console.error(error);
+    }
   };
 
   const produtosFiltrados = produtos.filter(produto =>
