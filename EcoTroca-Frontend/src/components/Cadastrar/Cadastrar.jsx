@@ -76,11 +76,6 @@ const Cadastrar = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label>ID do Dono:</label>
-          <input type="number" {...register("ownerId", { required: true })} />
-        </div>
-
-        <div className={styles.formGroup}>
           <label>ID da Categoria:</label>
           <input
             type="number"

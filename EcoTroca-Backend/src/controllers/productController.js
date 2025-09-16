@@ -11,6 +11,8 @@ export const productRegister = async (req, res) => {
   const { title, description, condition, status, imageUrl, city, district, address, ownerId, categoryId } = req.body;
 
   try {
+    const userId = req.params.id;
+
     const newProduct = await createProduct({
       title,
       description,
@@ -20,16 +22,22 @@ export const productRegister = async (req, res) => {
       city,
       district,
       address,
-      ownerId,
-      categoryId
-    });
+      categoryId: parseInt(categoryId)
+    }, parseInt(userId));
 
-    res.status(201).json({ product: newProduct, message: "Produto criado com sucesso!" });
+    res.status(201).json({ 
+      product: newProduct, 
+      message: "Produto criado com sucesso!" 
+    });
+    
   } catch (error) {
     console.error("Erro ao criar produto:", error);
-    res.status(500).json({ error: error.message, message: "Erro ao criar produto" });
+    res.status(500).json({ 
+      error: error.message, 
+      message: "Erro ao criar produto" 
+    });
   }
-};
+}
 
 export const updateProductController = async (req, res) => {
   const id = req.params.id;
