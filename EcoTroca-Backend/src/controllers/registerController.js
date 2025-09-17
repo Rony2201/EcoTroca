@@ -8,7 +8,6 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const userRegister = async (req, res) => {
-
   try {
     const { email, password, username } = req.body;
 
@@ -19,31 +18,26 @@ export const userRegister = async (req, res) => {
     const newUser = await register({
       email: email,
       password: hashedPassword,
-      username: username
+      username: username,
     });
-
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email, username: newUser.username },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
     res.status(201).json({
       user: newUser,
       message: "Usuário criado com sucesso!",
-      token
     });
   } catch (error) {
     // Verificando se o erro é uma violação de restrição única do Prisma
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
       res.status(409).json({
         error: "Conflito de dados",
-        message: "O e-mail ou nome de usuário já está em uso."
+        message: "O e-mail ou nome de usuário já está em uso.",
       });
     } else {
       res.status(500).json({
         error: error.message || error,
-        message: "Erro ao criar usuário"
+        message: "Erro ao criar usuário",
       });
     }
   }
@@ -51,7 +45,7 @@ export const userRegister = async (req, res) => {
 
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
     const user = await findByEmail(email);
 
@@ -73,6 +67,8 @@ export const userLogin = async (req, res) => {
 
     res.json({ token, message: "Login bem-sucedido!" });
   } catch (error) {
-    res.status(500).json({ error: error.message || error, message: "Erro ao fazer login" });
+    res
+      .status(500)
+      .json({ error: error.message || error, message: "Erro ao fazer login" });
   }
 };
