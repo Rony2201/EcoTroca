@@ -30,3 +30,76 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+.card-custom {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap; /* Adicione esta linha */
+}
+
+.buttonGroup .btn-primary {
+  background: #111;
+  color: #fff;
+  border: none;
+}
+
+.buttonGroup .btn-primary:hover {
+  background: #333;
+}
+
+.buttonGroup .btn-info {
+  background: #b6e2c7;
+  color: #111;
+  border: none;
+}
+
+.buttonGroup .btn-info:hover {
+  background: #7fcf9c;
+}
+
+.editButton {
+  background: #1d5e03;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.editButton:hover {
+  background: #0b4303;
+}
+
+.propostasButton {
+  background: #b6e2c7;
+  color: #111;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.propostasButton:hover {
+  background: #7fcf9c;
+}

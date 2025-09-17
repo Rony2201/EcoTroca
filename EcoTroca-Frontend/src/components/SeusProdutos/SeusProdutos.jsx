@@ -1,11 +1,11 @@
-// src/components/SeusProdutos/SeusProdutos.jsx
-import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './SeusProdutos.module.css';
-import { AuthContext } from '../../context/authHandler';
-import { PropostaContext } from '../../context/PropostaContext';
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "./SeusProdutos.module.css";
+import { AuthContext } from "../../context/authHandler.jsx";
+import { PropostaContext } from "../../context/PropostaContext";
+import PropostasEnviadas from "../../PropostasEnviadas.jsx";
 
 function SeusProdutos() {
   const navigate = useNavigate();
@@ -27,17 +27,17 @@ function SeusProdutos() {
       // Verifica se o usuário e o id existem antes de fazer a chamada
       if (user && user.id) {
         try {
-          const token = localStorage.getItem('token');
+          const token = localStorage.getItem("token");
           const response = await api.get(`/products/user/${user.id}`, {
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
 
           setProdutosDoUsuario(response.data);
           setIsLoading(false);
         } catch (err) {
-          setError('Erro ao carregar seus produtos.');
+          setError("Erro ao carregar seus produtos.");
           setIsLoading(false);
           console.error(err);
         }
@@ -50,12 +50,12 @@ function SeusProdutos() {
     }
   }, [user, authLoading]); // A dependência [user] e [authLoading] garante que a busca seja feita quando o usuário for carregado
 
-  const produtosFiltrados = produtosDoUsuario.filter(produto =>
+  const produtosFiltrados = produtosDoUsuario.filter((produto) =>
     produto.title.toLowerCase().includes(busca.toLowerCase())
   );
 
   const handleCadastro = () => {
-    navigate('/cadastro');
+    navigate("/cadastro");
   };
 
   const abrirModal = (produto) => {
@@ -67,7 +67,7 @@ function SeusProdutos() {
   };
 
   const propostasDoProduto = produtoSelecionado
-    ? propostas.filter(p => p.idProdutoDestino === produtoSelecionado.id)
+    ? propostas.filter((p) => p.productId === produtoSelecionado.id_product)
     : [];
 
   return (
@@ -79,11 +79,15 @@ function SeusProdutos() {
             type="search"
             placeholder="Buscar produto..."
             value={busca}
-            onChange={e => setBusca(e.target.value)}
+            onChange={(e) => setBusca(e.target.value)}
             className="form-control me-2"
-            style={{ maxWidth: '300px' }}
+            style={{ maxWidth: "300px" }}
           />
-          <button type="button" className="btn btn-success" onClick={handleCadastro}>
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={handleCadastro}
+          >
             Cadastrar
           </button>
         </div>
@@ -93,48 +97,95 @@ function SeusProdutos() {
         {isLoading && <p>Carregando seus produtos...</p>}
         {error && <p className="text-danger">{error}</p>}
 
-        {!isLoading && !error && (
-          produtosFiltrados.length > 0 ? (
-            produtosFiltrados.map(produto => (
-              <div className="col-md-4 mb-3" key={produto.id}>
-                <div className={`card ${styles['card-custom']}`}>
+        {!isLoading &&
+          !error &&
+          (produtosFiltrados.length > 0 ? (
+            produtosFiltrados.map((produto) => (
+              <div className="col-md-4 mb-3" key={produto.id_product}>
+                <div className={`card ${styles["card-custom"]}`}>
                   <img
                     src={produto.imageUrl}
-                    className={`card-img-top ${styles['card-img-top']}`}
+                    className={`card-img-top ${styles["card-img-top"]}`}
                     alt={produto.title}
                   />
-                  <div className={`card-body ${styles['card-body']}`}>
+                  <div className={`card-body ${styles["card-body"]}`}>
                     <h3 className="card-title">{produto.title}</h3>
                     <p className="card-text">{produto.description}</p>
-                    <p className="card-text">{produto.city} - {produto.district}</p>
-                    <button className="btn btn-primary">Editar Produto</button>
+                    <p className="card-text">
+                      {produto.city} - {produto.district}
+                    </p>
+                    <div className={styles.buttonGroup}>
+                      <button className={styles.editButton}>
+                        Editar Produto
+                      </button>
+                      <button
+                        className={styles.propostasButton}
+                        onClick={() => abrirModal(produto)}
+                      >
+                        Ver Propostas
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             ))
           ) : (
             <p>Você ainda não cadastrou produtos.</p>
-          )
-        )}
+          ))}
       </div>
 
       {/* Modal de propostas */}
       {produtoSelecionado && (
         <>
-          <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+          <div
+            className="modal fade show"
+            style={{ display: "block" }}
+            tabIndex="-1"
+          >
             <div className="modal-dialog modal-lg">
               <div className="modal-content">
-
                 <div className="modal-header">
-                  <h5 className="modal-title">Propostas recebidas para: {produtoSelecionado.nome}</h5>
-                  <button type="button" className="btn-close" onClick={fecharModal}></button>
+                  <h5 className="modal-title">
+                    Propostas recebidas para: {produtoSelecionado.title}
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={fecharModal}
+                  ></button>
                 </div>
 
                 <div className="modal-body">
                   {propostasDoProduto.length > 0 ? (
-                    propostasDoProduto.map((proposta, index) => (
-                      <div key={index} className="mb-3 border p-3 rounded">
-                        <strong>Descrição:</strong> {proposta.descricao}
+                    propostasDoProduto.map((proposta) => (
+                      <div
+                        key={proposta.id}
+                        className="mb-3 border p-3 rounded"
+                      >
+                        <h6>
+                          Proposta de:{" "}
+                          {proposta.proposer?.username ||
+                            "Usuário desconhecido"}
+                        </h6>
+                        <p>
+                          <strong>Status:</strong> {proposta.status}
+                        </p>
+                        <hr />
+                        {proposta.messages && proposta.messages.length > 0 ? (
+                          proposta.messages.map((msg) => (
+                            <div key={msg.id} className="mb-2">
+                              <p className="mb-0">
+                                <strong>{msg.author?.username}:</strong>{" "}
+                                {msg.content}
+                              </p>
+                              <small className="text-muted">
+                                {new Date(msg.sentAt).toLocaleString()}
+                              </small>
+                            </div>
+                          ))
+                        ) : (
+                          <p>Nenhuma mensagem nesta proposta.</p>
+                        )}
                       </div>
                     ))
                   ) : (
@@ -143,17 +194,23 @@ function SeusProdutos() {
                 </div>
 
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={fecharModal}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={fecharModal}
+                  >
                     Fechar
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
           <div className="modal-backdrop fade show" onClick={fecharModal}></div>
         </>
       )}
+
+      <hr className="my-5" />
+      <PropostasEnviadas />
     </div>
   );
 }

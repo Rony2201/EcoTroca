@@ -1,0 +1,64 @@
+.titulo {
+  margin-bottom: 1.5rem;
+  color: #333;
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.accordionItem {
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #dee2e6;
+  overflow: hidden;
+}
+
+.accordionButton {
+  background-color: #f8f9fa;
+  color: #212529;
+  font-weight: 500;
+}
+
+.accordionButton:not(.collapsed) {
+  background-color: #e7f1ff;
+  color: #0c63e4;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.accordionButton:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.pending {
+  background-color: #ffc107;
+  color: #000;
+}
+.accepted {
+  background-color: #198754;
+}
+.rejected {
+  background-color: #dc3545;
+}
+.cancelled {
+  background-color: #6c757d;
+}
+
+.accordionBody {
+  background-color: #fff;
+}
