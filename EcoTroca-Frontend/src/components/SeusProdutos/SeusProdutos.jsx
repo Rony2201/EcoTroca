@@ -6,6 +6,7 @@ import styles from "./SeusProdutos.module.css";
 import { AuthContext } from "../../context/authHandler.jsx";
 import { PropostaContext } from "../../context/PropostaContext";
 import PropostasEnviadas from "../../PropostasEnviadas.jsx";
+import EditarProdutoForm from "../EditarProdutoForm/EditarProdutoForm.jsx";
 
 function SeusProdutos() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function SeusProdutos() {
 
   const [busca, setBusca] = useState("");
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [produtoParaEditar, setProdutoParaEditar] = useState(null);
 
   // useEffect para buscar os produtos do usuário
   useEffect(() => {
@@ -64,6 +66,22 @@ function SeusProdutos() {
 
   const fecharModal = () => {
     setProdutoSelecionado(null);
+  };
+
+  const abrirModalEdicao = (produto) => {
+    setProdutoParaEditar(produto);
+  };
+
+  const fecharModalEdicao = () => {
+    setProdutoParaEditar(null);
+  };
+
+  const handleSaveEdit = (updatedProduct) => {
+    // Atualiza a lista de produtos no estado local para refletir a mudança instantaneamente
+    setProdutosDoUsuario(produtosDoUsuario.map(p =>
+      p.id_product === updatedProduct.product.id_product ? updatedProduct.product : p
+    ));
+    fecharModalEdicao(); // Fecha o modal
   };
 
   const propostasDoProduto = produtoSelecionado
@@ -115,7 +133,10 @@ function SeusProdutos() {
                       {produto.city} - {produto.district}
                     </p>
                     <div className={styles.buttonGroup}>
-                      <button className={styles.editButton}>
+                      <button
+                        className={styles.editButton}
+                        onClick={() => abrirModalEdicao(produto)}
+                      >
                         Editar Produto
                       </button>
                       <button
@@ -207,6 +228,14 @@ function SeusProdutos() {
           </div>
           <div className="modal-backdrop fade show" onClick={fecharModal}></div>
         </>
+      )}
+
+      {produtoParaEditar && (
+        <EditarProdutoForm
+          product={produtoParaEditar}
+          onSave={handleSaveEdit}
+          onClose={fecharModalEdicao}
+        />
       )}
 
       <hr className="my-5" />
