@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import api from "../../services/api"; // 1. Importe a instância configurada 'api'
 import { useState } from "react";
 import styles from "./Cadastrar.module.css";
 
@@ -9,9 +9,13 @@ const Cadastrar = () => {
 
   const onSubmit = async (data) => {
     try {
-      data.ownerId = Number(data.ownerId);
-      data.categoryId = Number(data.categoryId);
-      const response = await axios.post("http://localhost:3000/product", data);
+      console.log(data);
+      // 2. Use 'api.post' em vez de 'axios.post'. A URL base já está configurada.
+      const response = await api.post("/product", data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       setMessage(response.data.message);
       reset();
     } catch (error) {

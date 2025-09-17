@@ -9,7 +9,7 @@ const SECRET = process.env.JWT_SECRET;
 
 export const register = async (data) => {
   // A senha já vem hasheada do controller, então a usamos diretamente.
-  return prisma.user.create({
+  return prisma.users.create({
     data: {
       username: data.username,
       email: data.email,
@@ -19,7 +19,7 @@ export const register = async (data) => {
 };
 
 export const login = async (data) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.users.findUnique({
     where: { username: data.username },
   });
 
@@ -41,7 +41,7 @@ export const login = async (data) => {
 };
 
 export const findByEmail = async (email) => {
-  return prisma.user.findUnique({
+  return prisma.users.findUnique({
     where: { email: email },
   });
 };

@@ -1,12 +1,9 @@
 // src/models/productModel.js
 import prisma from "../prisma.js";
 
-export const createProduct = async (data, userId) => {
+export const createProduct = async (data) => {
   return prisma.product.create({
-    data: {
-      ...data,
-      ownerId: userId
-    }
+    data: data
   });
 }
 

@@ -16,8 +16,8 @@ import {
 
 const productRouter = express.Router();
 
-productRouter.post("/product/:id", authenticateToken, productRegister);
-productRouter.post("/product", productRegister);
+
+productRouter.post("/product", authenticateToken, productRegister);
 
 productRouter.get("/product", getAllProductsController);
 productRouter.get("/product/:id", getProductId);

@@ -8,11 +8,12 @@ import {
 import prisma from "../prisma.js";
 
 export const productRegister = async (req, res) => {
-  const { title, description, condition, status, imageUrl, city, district, address, ownerId, categoryId } = req.body;
+
+
+  const { title, description, condition, status, imageUrl, city, district, address, categoryId } = req.body;
 
   try {
-    const userId = req.params.id;
-
+    const ownerId = req.user.id;
     const newProduct = await createProduct({
       title,
       description,
@@ -22,9 +23,10 @@ export const productRegister = async (req, res) => {
       city,
       district,
       address,
-      categoryId: parseInt(categoryId)
-    }, parseInt(userId));
-
+      categoryId: Number(categoryId),
+      ownerId: ownerId
+    });
+    
     res.status(201).json({ 
       product: newProduct, 
       message: "Produto criado com sucesso!" 

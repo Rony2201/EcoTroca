@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  
+
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Token não fornecido ou inválido' });
   }
@@ -18,8 +18,10 @@ export const authenticateToken = (req, res, next) => {
       return res.status(403).json({ error: 'Token inválido ou expirado' });
     }
 
-    req.userId = payload.id; 
-    req.username = payload.username;
+    req.user = {
+      id: payload.id,
+      username: payload.username
+    }
 
     next();
   });
