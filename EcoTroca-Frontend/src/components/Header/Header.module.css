@@ -1,13 +1,22 @@
+* > a {
+
+    text-decoration: none;
+    color: rgb(46, 46, 46);
+    transition: 0.4s;
+    margin-left: 1.7rem;
+    
+}
+* > a:hover {
+    color:black
+}
+
 .categories {
     margin-right: 5px;
 }
 .decoration {
     text-decoration: none;
 }
-.loginButton:hover {
-    background: #FF0000;
-    border: 1px solid #FF0000;
-}
+
 :global(.navbar.bg-body-tertiary) {
     border-bottom: 1px solid #CCC; }
 

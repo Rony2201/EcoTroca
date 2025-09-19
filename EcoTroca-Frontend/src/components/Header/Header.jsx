@@ -29,28 +29,28 @@ function Header() {
             <form className="d-flex" role="search">
               <Link to="/">
                 <span
-                  className={`btn btn-outline-success ${styles.categories}`}
+                  className={`${styles.categories}`}
                 >
                   Home
                 </span>
               </Link>
               <Link to="/todosprodutos">
                 <span
-                  className={`btn btn-outline-success ${styles.categories}`}
+                  className={`${styles.categories}`}
                 >
                   Todos Produtos
                 </span>
               </Link>
               <Link to="/perfil">
                 <span
-                  className={`btn btn-outline-success ${styles.categories}`}
+                  className={`${styles.categories}`}
                 >
                   Perfil
                 </span>
               </Link>
               <Link to="/about">
                 <span
-                  className={`btn btn-outline-success ${styles.categories}`}
+                  className={`${styles.categories}`}
                 >
                   Sobre
                 </span>
@@ -58,14 +58,14 @@ function Header() {
               {isLoggedIn ? (
                 <span
                   onClick={handleLogout}
-                  className={`btn btn-outline-success ${styles.loginButton}`}
+                  className={`${styles.loginButton}`}
                 >
                   Sair
                 </span>
               ) : (
                 <Link to="/login">
                   <span
-                    className={`btn btn-outline-success ${styles.loginButton}`}
+                    className={`${styles.loginButton}`}
                   >
                     Login
                   </span>
