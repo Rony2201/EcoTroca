@@ -12,11 +12,11 @@ function ProdutoCard({ produto }) {
       />
       <div className={`card-body ${styles.body}`}>
         <h5 className={styles.title}>{produto.title}</h5>
-        <p className={styles.description}>{produto.description}</p>
-        <p className={styles.location}>
-          {produto.city}, {produto.district}
+        <p className={styles.description}> Descrição do produto: {produto.description}</p>
+        <p className={styles.location}>Localização: {produto.city}, {produto.district}
         </p>
-        <span className={`${styles.status} ${produto.status === 'RESERVED' ? styles.reserved : ''}`}>
+    
+        <span className={`${styles.status} ${produto.status === 'RESERVED' ? styles.reserved : ''}`}> 
           {produto.status}
         </span>
       </div>

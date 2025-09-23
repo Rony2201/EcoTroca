@@ -128,10 +128,10 @@ function SeusProdutos() {
                   />
                   <div className={`card-body ${styles["card-body"]}`}>
                     <h3 className="card-title">{produto.title}</h3>
-                    <p className="card-text">{produto.description}</p>
-                    <p className="card-text">
-                      {produto.city} - {produto.district}
+                    <p className="card-text">Descrição do produto: {produto.description}</p>
+                    <p className="card-text">Localização: {produto.city} - {produto.district}
                     </p>
+                    <p className="card-text">Status do produto: {produto.status}</p>
                     <div className={styles.buttonGroup}>
                       <button
                         className={styles.editButton}
