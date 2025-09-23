@@ -28,3 +28,8 @@ export const updateProduct = async (productId, productData) => {
     throw error;
   }
 };
+
+export const getProductById = async (productId) => {
+  const response = await productService.get(`/product/${productId}`);
+  return response.data;
+};
