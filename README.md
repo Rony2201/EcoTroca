@@ -66,10 +66,10 @@ Para rodar este projeto localmente para avaliação:
 1.  *Clone o repositório:*
     git clone https://github.com/Rony2201/EcoTroca
 2.  *Acesse a pasta do projeto:*
-    cd EcoTroca
+    -- cd EcoTroca
 3.  *Instale as dependências:*
-    npm install
+    -- npm install
 4.  *Inicie o servidor/aplicação:*
-    npm run dev
+    -- npm run dev
 
 ---
